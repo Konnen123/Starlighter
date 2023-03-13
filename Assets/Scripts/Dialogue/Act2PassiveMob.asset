@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312101d09027d6442843ca1d69eeec25, type: 3}
+  m_Name: Act2PassiveMob
+  m_EditorClassIdentifier: 
+  npcName: 
+  npcDialogue:
+  - Hello child, how can I help you?
+  - Ha, I guess the old man fooled you. He tricked you into teleporting in a maze
+    world so he can escape from you. The artifact was never stolen, he has the artifact.
+  - You have to challenge him in his own dreams, in this universe he is immortal.
+    Use this teleporter to enter his mind.
+  - Sorry, I don't know how to fight. However, I know his weak spots are his eyes
+  playerDialogue:
+  - Give me the artifact that you stole from planet Abronoe!
+  - 'How can I beat him? '
+  - Can you help me?
