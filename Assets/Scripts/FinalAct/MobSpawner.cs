@@ -23,6 +23,8 @@ public class MobSpawner : MonoBehaviour
         GameObject mob = Instantiate(npc, transform);
         mob.transform.localPosition=Vector3.zero;
         yield return new WaitForSeconds(mobSpawnerCooldown);
+        if(HealthManager.Instance.GetCurrentHealth()<=0)
+            yield break;
         StartCoroutine(InstantiateMob());
 
     }

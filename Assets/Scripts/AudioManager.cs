@@ -16,7 +16,12 @@ public class AudioManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>(); 
         Instance = this;
-     
+        
+        int isSoundActive = PlayerPrefs.GetInt("Sound");
+        if (isSoundActive == 0)
+            AudioListener.pause = false;
+        else
+            AudioListener.pause = true;
     }
 
     public void playSound(AudioClip clip)

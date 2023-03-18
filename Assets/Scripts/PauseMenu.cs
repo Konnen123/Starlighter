@@ -11,8 +11,11 @@ public class PauseMenu : MonoBehaviour
     private ThirdPersonShooterController shooterController;
     private MovementStateManager stateManager;
 
+    private Camera camera;
+
     private void Start()
     {
+        camera=Camera.main;
         backGround = transform.GetChild(0).gameObject;
         backGround.SetActive(false);
         shooterController = transform.parent.GetComponent<ThirdPersonShooterController>();
@@ -23,6 +26,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            camera.GetComponent<ThirdPersonCamera>().enabled = false;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
@@ -38,6 +42,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Unpause()
     {
+        camera.GetComponent<ThirdPersonCamera>().enabled = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1;

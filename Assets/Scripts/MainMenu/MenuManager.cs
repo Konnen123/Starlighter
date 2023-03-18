@@ -10,11 +10,17 @@ public class MenuManager : MonoBehaviour
     private Camera mainCamera;
  
     [SerializeField] private HeadLook headLook;
-    [SerializeField] private GameObject pressEnterText,mainMenuButtons,title,storyMode,levelHolder;
+    [SerializeField] private GameObject pressEnterText,mainMenuButtons,title,storyMode,levelHolder,optionMenu;
     [SerializeField] private Vector3 cameraPositionOnEnter;
     [SerializeField] private float speed;
     void Start()
     {
+        int isSoundActive = PlayerPrefs.GetInt("Sound");
+        if (isSoundActive == 0)
+            AudioListener.pause = false;
+        else
+            AudioListener.pause = true;
+        
         int sceneIndex = PlayerPrefs.GetInt("sceneIndex");
         Debug.Log(sceneIndex);
 
@@ -26,6 +32,7 @@ public class MenuManager : MonoBehaviour
         mainCamera = Camera.main;
         title.SetActive(false);
         storyMode.SetActive(false);
+        optionMenu.SetActive(false);
         mainCamera.transform.position = new Vector3(0, 0, -101f);
         pressEnterText.SetActive(true);
         mainMenuButtons.SetActive(false);

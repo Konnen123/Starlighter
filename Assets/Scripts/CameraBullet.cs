@@ -5,19 +5,26 @@ using UnityEngine;
 
 public class CameraBullet : MonoBehaviour
 {
-    private Vector3 player;
+    private Transform player;
+    private Vector3 playerShootingPosition;
     [SerializeField] private float speed;
     private Vector3 reference;
+
+    private Rigidbody rigidbody;
     void Start()
     {
-        player = GameObject.FindWithTag("Player").transform.position;
+        rigidbody = GetComponent<Rigidbody>();
+        player = GameObject.FindWithTag("Player").transform;
+        playerShootingPosition = player.GetChild(player.childCount-1).position;
         Destroy(gameObject,1f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, player, ref reference, speed);
+       transform.position = Vector3.SmoothDamp(transform.position, playerShootingPosition, ref reference, speed);
+    if(Mathf.Abs(transform.position.x-playerShootingPosition.x)<.1f)
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)

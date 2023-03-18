@@ -640,6 +640,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -16.013264
       objectReference: {fileID: 0}
+    - target: {fileID: 1055169371, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1055169372, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.19582
@@ -3496,7 +3500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 990ace0b08bfb8a48a9cd913432877d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 2000
   boss: {fileID: 7322006922081325365}
   bossEyes: {fileID: 1289431786}
   bossAttacks: {fileID: 95583418}
@@ -6482,7 +6486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cc3d21c1bf3354e96f03b0c79850b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDown: 5
+  coolDown: 3
 --- !u!95 &1662202792
 Animator:
   serializedVersion: 5
@@ -7108,7 +7112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94cc3d21c1bf3354e96f03b0c79850b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coolDown: 5
+  coolDown: 3
 --- !u!95 &1957427486
 Animator:
   serializedVersion: 5

@@ -10,7 +10,7 @@ public class LaserControl : MonoBehaviour
     private MeshRenderer _renderer;
     private CapsuleCollider _collider;
     private Animator _animator;
-    void Start()
+    void OnEnable()
     {
         _renderer = GetComponent<MeshRenderer>();
         _collider = GetComponent<CapsuleCollider>();
