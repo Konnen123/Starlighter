@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9404771
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1668,6 +1668,37 @@ MonoBehaviour:
             m_StringArgument: Down
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &1109119342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1109119343}
+  m_Layer: 9
+  m_Name: ShootPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1109119343
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1109119342}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.66, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 169967009860508879}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1218264336
 GameObject:
   m_ObjectHideFlags: 0
@@ -4357,6 +4388,7 @@ Transform:
   - {fileID: 1428065009}
   - {fileID: 815146128}
   - {fileID: 278800183}
+  - {fileID: 1109119343}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5095,8 +5127,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 321043427970439332, guid: 4d0c06af878dd2942b447f7432271357, type: 3}
-  - {fileID: 6731146002191872453, guid: 4d0c06af878dd2942b447f7432271357, type: 3}
+  - {fileID: 2100000, guid: c0697fe15d841e3418ad0a0027c63fc8, type: 2}
+  - {fileID: 2100000, guid: 2b40215ad6e6ed54db62062ceac62a41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5534,7 +5566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrappled: 0
-  maxDistance: 120
+  maxDistance: 150
   whatIsGrappleable:
     serializedVersion: 2
     m_Bits: 1024

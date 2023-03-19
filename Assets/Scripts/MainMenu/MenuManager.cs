@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,7 +22,10 @@ public class MenuManager : MonoBehaviour
         else
             AudioListener.pause = true;
         
-        int sceneIndex = PlayerPrefs.GetInt("sceneIndex");
+        LevelData levelData = SaveSystem.LoadLevel();
+        int sceneIndex = 0;
+        if (levelData != null)
+            sceneIndex = levelData.level;
         Debug.Log(sceneIndex);
 
         for (int i = 0; i <= sceneIndex; i++)
@@ -41,6 +45,12 @@ public class MenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && !isPlayerActive)
+        {
+            Debug.Log("ok");
+            Application.Quit();
+        }
+        
         if (Input.GetKeyDown(KeyCode.Return) && !isPlayerActive)
         {
             isPlayerActive = true;

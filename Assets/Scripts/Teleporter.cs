@@ -18,8 +18,8 @@ public class Teleporter : MonoBehaviour
            
                 if (sceneIndex > PlayerPrefs.GetInt("sceneIndex"))
                 {
-                    PlayerPrefs.SetInt("sceneIndex",sceneIndex);
-                    PlayerPrefs.Save();
+
+                    SaveSystem.SaveLevel(sceneIndex);
                 }
                 SceneManager.LoadScene(sceneName);      
             }
