@@ -23,7 +23,7 @@ public class SwitchToggle : MonoBehaviour
         toggle = GetComponent<Toggle>();
 
         isSoundActive = PlayerPrefs.GetInt("Sound");
-        Debug.Log(isSoundActive);
+
 
         if (isSoundActive == 0)
             toggle.isOn = true;
