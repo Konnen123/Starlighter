@@ -24,6 +24,12 @@ public class IdleState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movementStateManager)
     {
+        
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping)
+        {
+            movementStateManager.SwitchState(movementStateManager.fallingState);
+        }
+        
         if (movementStateManager.isDead)
         {
             movementStateManager.SwitchState(movementStateManager.deathState);

@@ -50,10 +50,11 @@ public class EnemyAi : MonoBehaviour
     private Collider[] colliders;
     private CharacterJoint[] characterJoints;
     private Rigidbody[] rigidbodies;
+    private AudioSource heartBeat;
 
     private void Awake()
     {
-        
+        heartBeat = GameObject.Find("HeartBeat").GetComponent<AudioSource>();
         agent = GetComponent<NavMeshAgent>();
         npcAnimator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").transform;
@@ -125,6 +126,7 @@ public class EnemyAi : MonoBehaviour
 
     private void ChasePlayer()
     {
+        heartBeat.enabled = true;
         npcAnimator.Play(runAnimation.name);
         agent.speed = chaseSpeed;
         agent.SetDestination(player.position);
@@ -181,6 +183,7 @@ public class EnemyAi : MonoBehaviour
             _audioSource.clip = deathClip;
             _audioSource.Play();
             enableRagdoll();
+            heartBeat.enabled = false;
             Invoke(nameof(DestroyEnemy), 3f);
         }
     }

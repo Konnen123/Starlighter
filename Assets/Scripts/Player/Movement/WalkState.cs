@@ -11,36 +11,51 @@ public class WalkState : MovementBaseState
     private float currentJumpTime;
     public override void EnterState(MovementStateManager movementStateManager)
     {
-  
+        movementStateManager.stepSound.enabled = true;
         _animator = movementStateManager.animator;
         _rigidbody = movementStateManager.rigidbody;
     }
 
     public override void UpdateState(MovementStateManager movementStateManager)
     {
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping)
+        {
+            movementStateManager.stepSound.enabled = false;
+            movementStateManager.SwitchState(movementStateManager.fallingState);
+        }
+        
         if (movementStateManager.isDead)
         {
+            movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.deathState);
             return;
         }
-        
+
         if (Input.GetKey(KeyCode.LeftShift) && movementStateManager.grounded)
+        {
+            movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.runState);
-        
-        if(movementStateManager._grapplingGun.isGrappled)
+        }
+
+        if (movementStateManager._grapplingGun.isGrappled)
+        {
+            movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.grappleState);
+        }
+            
         
         if (Input.GetKeyDown(KeyCode.Space) && movementStateManager.grounded)
         {
-            
+            movementStateManager.stepSound.enabled = false;
             Jump(movementStateManager);
         }
 
         if (isJumping)
         {
-
+            
             if (currentJumpTime >= movementStateManager.jumpCooldown)
             {
+             
                 movementStateManager.SwitchState(movementStateManager.idleState);
                 isJumping = false;
                 currentJumpTime = 0;
@@ -87,6 +102,7 @@ public class WalkState : MovementBaseState
         
         if (velocity.magnitude < .1f && !isJumping)
         {
+            movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.idleState);
             return;
         }
@@ -98,36 +114,8 @@ public class WalkState : MovementBaseState
             _animator.Play("Walk");
         
     }
-    
-    
-    Vector3 CurrentDirection(MovementStateManager movementStateManager)
-    {
-        Transform cameraTransform = movementStateManager.mainCamera.transform;
-        
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-            return cameraTransform.forward +cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
-            return cameraTransform.forward -cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
-            return -cameraTransform.forward +cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-            return -cameraTransform.forward -cameraTransform.right;
-        
-        if (Input.GetKey(KeyCode.S))
-            return -cameraTransform.forward;
-        
-        if (Input.GetKey(KeyCode.A))
-            return  -cameraTransform.right;
-        
-        if (Input.GetKey(KeyCode.D))
-            return  cameraTransform.right;
 
-        return cameraTransform.forward;
-    }
-    
+
     void Jump(MovementStateManager movementStateManager)
     {
         if (SceneManager.GetActiveScene().name == "Intro")

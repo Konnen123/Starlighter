@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class ThirdPersonShooterController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class ThirdPersonShooterController : MonoBehaviour
 
     [SerializeField] private float rifleDamgage=20;
     [SerializeField] private float shootDistance = 200;
+    [SerializeField] private Color enemyFoundCrosshair;
     
     private MovementStateManager movementStateManager;
     private ThirdPersonCamera thirdPersonCamera;
@@ -43,6 +45,11 @@ public class ThirdPersonShooterController : MonoBehaviour
     private Camera camera;
     private Vector2 screenCenterPoint;
     private float currentShootCooldown;
+
+    private Color defaultCrosshairColor;
+    private Image crosshairImage;
+
+    
 
 
     private void Awake()
@@ -54,6 +61,10 @@ public class ThirdPersonShooterController : MonoBehaviour
         movementStateManager = GetComponent<MovementStateManager>();
         trailPool = new ObjectPool<TrailRenderer>(CreateTrail);
 
+        crosshairImage = crossHair.GetComponentInChildren<Image>();
+        
+        defaultCrosshairColor = crosshairImage.color;
+        
         rifle.SetActive(false);
 
     }
@@ -90,7 +101,11 @@ public class ThirdPersonShooterController : MonoBehaviour
             worldAimTarget.y = transform.position.y;
             Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
             
+            crosshairImage.color = defaultCrosshairColor;
             
+            //crosshair will be red if enemy is detected
+            if(isShootable(raycastHit.collider.gameObject.layer) && Vector3.Distance(transform.position, hitTransform.position) <= shootDistance)
+                crosshairImage.color = enemyFoundCrosshair;
 
             transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * 20f);
             
@@ -222,5 +237,12 @@ public class ThirdPersonShooterController : MonoBehaviour
         trail.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
 
         return trail;
+    }
+
+    bool isShootable(int layer)
+    {
+        if (layer == 8 || (layer >= 11 && layer <= 15))
+            return true;
+        return false;
     }
 }

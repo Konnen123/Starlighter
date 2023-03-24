@@ -36,10 +36,13 @@ public class MenuManager : MonoBehaviour
         int sceneIndex = 0;
         if (levelData != null)
             sceneIndex = levelData.level;
+            
+            
 
         for (int i = 0; i <= sceneIndex; i++)
         {
             levelHolder.transform.GetChild(i).GetComponent<Button>().interactable = true;
+            levelHolder.transform.GetChild(i).GetComponent<Image>().raycastTarget= true;
             levelHolder.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
         }
         mainCamera = Camera.main;

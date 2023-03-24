@@ -13,6 +13,11 @@ public class MovementStateManager : MonoBehaviour
     [Header("SwingSettings")] public float swingSpeed=10;
   
     
+    [Header("Sounds")]
+    public AudioSource stepSound;
+
+    public AudioSource runSound;
+    
     [Header("JumpSettings")] public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
@@ -48,6 +53,7 @@ public class MovementStateManager : MonoBehaviour
     public RunState runState = new RunState();
     public DeathState deathState = new DeathState();
     public GrappleState grappleState = new GrappleState();
+    public FallingState fallingState = new FallingState();
     
     [HideInInspector]
     public Rigidbody rigidbody;
@@ -61,6 +67,8 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        stepSound.enabled = false;
+        runSound.enabled = false;
         deathScreen.SetActive(false);
         _grapplingGun = GetComponentInChildren<GrapplingGun>();
 
@@ -124,8 +132,6 @@ public class MovementStateManager : MonoBehaviour
 
     private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
     {
-      //  if (lfAngle < -360f) lfAngle += 360f;
-     //   if (lfAngle > 360f) lfAngle -= 360f;
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
     

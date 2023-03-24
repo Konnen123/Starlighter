@@ -19,6 +19,7 @@ public class RunState : MovementBaseState
             movementStateManager.SwitchState(movementStateManager.walkState);
             return;
         }
+        movementStateManager.runSound.enabled = true;
         _rigidbody = movementStateManager.rigidbody;
         _animator = movementStateManager.animator;
         
@@ -26,24 +27,39 @@ public class RunState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movementStateManager)
     {
+       
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-1)
+        {
+      
+            movementStateManager.runSound.enabled = false;
+            movementStateManager.SwitchState(movementStateManager.fallingState);
+        }
         
         if (movementStateManager.isDead)
         {
+            movementStateManager.runSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.deathState);
             return;
         }
-        
-        if(Input.GetKeyDown(KeyCode.Space)&& movementStateManager.grounded)
+
+        if (Input.GetKeyDown(KeyCode.Space) && movementStateManager.grounded)
+        {
+            movementStateManager.runSound.enabled = false;
             Jump(movementStateManager);
-        
-          if(movementStateManager._grapplingGun.isGrappled)
+        }
+
+        if (movementStateManager._grapplingGun.isGrappled)
+        {
+            movementStateManager.runSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.grappleState);
+        }
         
         if (isJumping)
         {
 
             if (currentJumpTime >= movementStateManager.jumpCooldown)
             {
+                movementStateManager.runSound.enabled = false;
                 movementStateManager.SwitchState(movementStateManager.idleState);
                 isJumping = false;
                 currentJumpTime = 0;
@@ -98,22 +114,19 @@ public class RunState : MovementBaseState
         
         if (velocity.magnitude < .1f && !isJumping)
         {
+            movementStateManager.runSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.idleState);
             return;
         }
         
        _rigidbody.MovePosition(movementStateManager.transform.position +moveDirection);
+       
 
-
-       //   Vector3 cameraPosition = CurrentDirection(movementStateManager);
-        
+       
         if(!isJumping)
         _animator.Play("Run");
         
-     //  cameraPosition.y = 0;
-     
-        
-     //  movementStateManager.transform.position += Time.fixedDeltaTime * movementStateManager.runSpeed * cameraPosition;
+
        
 
    //    if (OnSlope(movementStateManager))
@@ -130,6 +143,7 @@ public class RunState : MovementBaseState
         
         _rigidbody.velocity=Vector3.zero;
         yield return new WaitForSeconds(.2f);
+        movementStateManager.runSound.enabled = false;
         Debug.Log("wall");
         movementStateManager.SwitchState(movementStateManager.idleState);
     }
@@ -147,34 +161,6 @@ public class RunState : MovementBaseState
         return false;
     }
     
-    
-    Vector3 CurrentDirection(MovementStateManager movementStateManager)
-    {
-        Transform cameraTransform = movementStateManager.mainCamera.transform;
-        
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D))
-            return cameraTransform.forward +cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
-            return cameraTransform.forward -cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D))
-            return -cameraTransform.forward +cameraTransform.right;
-        
-        if(Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.A))
-            return -cameraTransform.forward -cameraTransform.right;
-        
-        if (Input.GetKey(KeyCode.S))
-            return -cameraTransform.forward;
-        
-        if (Input.GetKey(KeyCode.A))
-            return  -cameraTransform.right;
-        
-        if (Input.GetKey(KeyCode.D))
-            return  cameraTransform.right;
-
-        return cameraTransform.forward;
-    }
     void Jump(MovementStateManager movementStateManager)
     {
         isJumping = true;
