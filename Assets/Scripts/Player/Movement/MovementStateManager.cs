@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MovementStateManager : MonoBehaviour
 {
+    [HideInInspector]   
     public Camera mainCamera;
     [Header("WalkSettings")] public float walkSpeed;
     [Header("RunSettings")] public float runSpeed;
@@ -28,6 +29,7 @@ public class MovementStateManager : MonoBehaviour
     [Header("Ground Check")] public float playerHeight;
     public LayerMask whatIsGround;
     public bool grounded;
+   
 
     [Header("SlopeSettings")] public float slopeForce;
     public float slopeForceRayLength;
@@ -54,7 +56,9 @@ public class MovementStateManager : MonoBehaviour
     public DeathState deathState = new DeathState();
     public GrappleState grappleState = new GrappleState();
     public FallingState fallingState = new FallingState();
+
     
+
     [HideInInspector]
     public Rigidbody rigidbody;
     [HideInInspector]
@@ -67,6 +71,7 @@ public class MovementStateManager : MonoBehaviour
 
     void Start()
     {
+        mainCamera = Camera.main;
         stepSound.enabled = false;
         runSound.enabled = false;
         deathScreen.SetActive(false);
@@ -83,14 +88,13 @@ public class MovementStateManager : MonoBehaviour
 
  
     void Update()
-    {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * .5f +.2f, whatIsGround);
-        
-      
+    { 
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * .5f +.2f, whatIsGround); 
+
         currentState.UpdateState(this);
-        
-        
+
     }
+    
 
     private void FixedUpdate()
     {

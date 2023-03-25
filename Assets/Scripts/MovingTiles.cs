@@ -10,6 +10,7 @@ public class MovingTiles : MonoBehaviour
     [SerializeField] private float time;
     [SerializeField] private float idleTime;
 
+    private Rigidbody playerRigidBody;
     private Vector3 currentVelocity;
     private Vector3 currentPosition;
     private float currentTime;
@@ -32,6 +33,7 @@ public class MovingTiles : MonoBehaviour
         
      camera = Camera.main;
         currentPosition = transform.localPosition;
+    
 
     }
 
@@ -82,6 +84,8 @@ public class MovingTiles : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            playerRigidBody = other.rigidbody;
+            playerRigidBody.interpolation = RigidbodyInterpolation.Interpolate;
             camera.GetComponent<CinemachineBrain>().m_UpdateMethod = CinemachineBrain.UpdateMethod.LateUpdate;
             player = other.gameObject;
             player.transform.SetParent(transform,true);
@@ -97,6 +101,7 @@ public class MovingTiles : MonoBehaviour
     
         if (other.gameObject.CompareTag("Player"))
         {
+            playerRigidBody.interpolation = RigidbodyInterpolation.None;
             camera.GetComponent<CinemachineBrain>().m_UpdateMethod = CinemachineBrain.UpdateMethod.FixedUpdate;
             player.transform.SetParent(null);
             isOnTile = false;

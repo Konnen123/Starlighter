@@ -31,7 +31,7 @@ public class GrappleState : MovementBaseState
         if (!movementStateManager._grapplingGun.isGrappled)
         {
             _collider.center = new Vector3(0, 0.9329002f, 0);
-            movementStateManager.SwitchState(movementStateManager.idleState);
+            movementStateManager.SwitchState(movementStateManager.fallingState);
         }
     }
 

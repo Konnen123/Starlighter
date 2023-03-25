@@ -28,7 +28,7 @@ public class RunState : MovementBaseState
     public override void UpdateState(MovementStateManager movementStateManager)
     {
        
-        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-1)
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-3)
         {
       
             movementStateManager.runSound.enabled = false;

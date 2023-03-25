@@ -18,7 +18,7 @@ public class WalkState : MovementBaseState
 
     public override void UpdateState(MovementStateManager movementStateManager)
     {
-        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping)
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-3)
         {
             movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.fallingState);
