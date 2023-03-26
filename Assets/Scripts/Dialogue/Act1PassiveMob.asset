@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 312101d09027d6442843ca1d69eeec25, type: 3}
   m_Name: Act1PassiveMob
   m_EditorClassIdentifier: 
-  npcName: Dumbledore
+  npcName: OblivionNpc
   npcDialogue:
   - Hello, stranger!
-  - The artifact has already been taken by other explorers. It is heavily guarded
-    on planet Eurynomos. Use the teleporter to go there.
-  - Unfortunately I am too old for this. I wish you the best of luck.
+  - The artifact has been procured by other adventurers and is presently under heavy
+    protection on planet Eurynomos. To reach it, utilize the teleporter.
+  - Sadly, I am no longer young enough for this undertaking. I offer you my sincerest
+    wishes for success.
   - Take care.
   playerDialogue:
   - Where can I find the artifact?

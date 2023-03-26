@@ -7,18 +7,20 @@ public class WalkState : MovementBaseState
 {
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private bool isJumping;
-    private float currentJumpTime;
+    
+    RaycastHit slopeHit;
     public override void EnterState(MovementStateManager movementStateManager)
     {
-        movementStateManager.stepSound.enabled = true;
+        if(movementStateManager.grounded)
+          movementStateManager.stepSound.enabled = true;
+        
         _animator = movementStateManager.animator;
         _rigidbody = movementStateManager.rigidbody;
     }
 
     public override void UpdateState(MovementStateManager movementStateManager)
     {
-        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-3)
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && _rigidbody.velocity.y<-6)
         {
             movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.fallingState);
@@ -33,7 +35,6 @@ public class WalkState : MovementBaseState
 
         if (Input.GetKey(KeyCode.LeftShift) && movementStateManager.grounded)
         {
-            movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.runState);
         }
 
@@ -46,26 +47,10 @@ public class WalkState : MovementBaseState
         
         if (Input.GetKeyDown(KeyCode.Space) && movementStateManager.grounded)
         {
-            movementStateManager.stepSound.enabled = false;
-            Jump(movementStateManager);
+            movementStateManager.SwitchState(movementStateManager.jumpingState);
         }
 
-        if (isJumping)
-        {
-            
-            if (currentJumpTime >= movementStateManager.jumpCooldown)
-            {
-             
-                movementStateManager.SwitchState(movementStateManager.idleState);
-                isJumping = false;
-                currentJumpTime = 0;
-            }
-            else
-            {
-                currentJumpTime += Time.deltaTime;
-            }
-            
-        }
+  
         
    
       
@@ -99,38 +84,44 @@ public class WalkState : MovementBaseState
 
         Vector3 moveDirection = horizontal * right + vertical * forward;
         
-        
-        if (velocity.magnitude < .1f && !isJumping)
+        moveDirection = moveDirection.normalized * Time.fixedDeltaTime * movementStateManager.walkSpeed;
+
+
+        if (velocity.magnitude < .1f && movementStateManager.grounded)
         {
             movementStateManager.stepSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.idleState);
             return;
         }
+
+        Vector3 slopeMovementDirection;
         
-        _rigidbody.MovePosition(movementStateManager.transform.position + moveDirection * movementStateManager.walkSpeed* Time.fixedDeltaTime);
+        if (OnSlope(movementStateManager))
+        {
+            slopeMovementDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+            _rigidbody.MovePosition(movementStateManager.transform.position + slopeMovementDirection);
+        }
+        else
+            _rigidbody.MovePosition(movementStateManager.transform.position +moveDirection);
         
         
-        if (!isJumping && movementStateManager.grounded)
+        if(movementStateManager.grounded)
             _animator.Play("Walk");
         
     }
 
-
-    void Jump(MovementStateManager movementStateManager)
+    private bool OnSlope(MovementStateManager movementStateManager)
     {
-        if (SceneManager.GetActiveScene().name == "Intro")
-        {
-            movementStateManager.SwitchState(movementStateManager.walkState);
-            return;
-        }
-        isJumping = true;
-       
-        _animator.Play("Jump");
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-        _rigidbody.AddForce(movementStateManager.transform.up * movementStateManager.jumpForce,ForceMode.Impulse);
-        
- 
+        if (!movementStateManager.grounded)
+            return false;
 
+     
+        
+        if(Physics.Raycast(movementStateManager.transform.position,Vector3.down,out slopeHit,movementStateManager.playerHeight/2 +.5f))
+            if (slopeHit.normal != Vector3.up)
+                return true;
+        return false;
     }
+ 
     
 }

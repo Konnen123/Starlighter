@@ -28,6 +28,7 @@ public class Mail : MonoBehaviour
 
     public void OnTriggerStay(Collider collision)
     {
+       
         if (!mail.activeInHierarchy)
             if(isMailRead)
                 textInfo.text = "Go to teleporter room";
@@ -40,18 +41,24 @@ public class Mail : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
+                collision.GetComponent<MovementStateManager>().enabled = false;
+                collision.GetComponent<MovementStateManager>().stepSound.enabled = false;
                 mail.SetActive(true);
                 isMailRead = true;
             }
-            
-            if(Input.GetKey(KeyCode.Return))
+
+            if (Input.GetKey(KeyCode.Return))
+            {
+                collision.GetComponent<MovementStateManager>().enabled = true;
                 mail.SetActive(false);
+            }
 
         }
     }
 
     public void OnTriggerExit(Collider collision)
     {
+     
         if (collision.gameObject.CompareTag("Player") && !isMailRead)
             textInfo.text = "Check YOUR COMPUTER";
     }

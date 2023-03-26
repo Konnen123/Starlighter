@@ -56,6 +56,7 @@ public class MovementStateManager : MonoBehaviour
     public DeathState deathState = new DeathState();
     public GrappleState grappleState = new GrappleState();
     public FallingState fallingState = new FallingState();
+    public JumpingState jumpingState = new JumpingState();
 
     
 

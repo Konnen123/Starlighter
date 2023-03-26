@@ -640,6 +640,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -16.013264
       objectReference: {fileID: 0}
+    - target: {fileID: 1023758473, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -192.10379
+      objectReference: {fileID: 0}
     - target: {fileID: 1055169371, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
       propertyPath: m_Lens.FieldOfView
       value: 60
@@ -652,6 +656,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -16.013264
       objectReference: {fileID: 0}
+    - target: {fileID: 1055169372, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -194.60379
+      objectReference: {fileID: 0}
     - target: {fileID: 1595115694, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.19582
@@ -659,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 1595115694, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
       propertyPath: m_LocalPosition.y
       value: -16.013264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595115694, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -192.10379
       objectReference: {fileID: 0}
     - target: {fileID: 169967009860508868, guid: d1932a9bae3ff094fafbcd9ab40a7d33, type: 3}
       propertyPath: m_Name
@@ -1517,7 +1529,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0.00009600766, y: -41.370064}
+  m_AnchoredPosition: {x: 0.00009600766, y: -41.370117}
   m_SizeDelta: {x: 609.8986, y: 20.8346}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &481101448
@@ -2719,7 +2731,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &788053239
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3763,6 +3775,7 @@ MonoBehaviour:
   cutScene: {fileID: 373109258}
   blackSkybox: {fileID: 2100000, guid: 84f4fb9091f17ce41b82e79de825389d, type: 2}
   healthBar: {fileID: 1299355222}
+  heartBeat: {fileID: 258764027}
   isHalfHp: 0
   isLowHp: 0
 --- !u!4 &953292303
@@ -4165,7 +4178,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: e7253f10572e23546b77ab1a5696c8cc, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4597,8 +4610,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You gave the totem back and saved their civilization from chaos. You are
-    considered a god among them.
+  m_text: Returning the totem and averting chaos within their civilization has earned
+    you godlike reverence among them.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fcad00d980d15ee419f06f4e92f0508e, type: 2}
   m_sharedMaterial: {fileID: 5076616399746960518, guid: fcad00d980d15ee419f06f4e92f0508e, type: 2}
@@ -5872,8 +5885,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You took the totem and destroyed their civilization. The artifact was too
-    powerful so it corrputed you, becoming what you wished to destroy.
+  m_text: By taking the totem, you caused the downfall of their civilization. The
+    overwhelming power of the artifact proved to be too much, leading to your corruption
+    and ultimately transforming you into the very thing you sought to annihilate.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fcad00d980d15ee419f06f4e92f0508e, type: 2}
   m_sharedMaterial: {fileID: 5076616399746960518, guid: fcad00d980d15ee419f06f4e92f0508e, type: 2}

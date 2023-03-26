@@ -12,6 +12,7 @@ public class BossHealthManager : MonoBehaviour
     [SerializeField] private Material blackSkybox;
     
     [SerializeField] private Image healthBar;
+    [SerializeField] private AudioSource heartBeat;
     private bool weakSpotFound;
 
     public bool isHalfHp;
@@ -69,6 +70,7 @@ public class BossHealthManager : MonoBehaviour
             Destroy(bossEyes);
             Destroy(bossAttacks);
             changeSky = true;
+            Destroy(heartBeat);
 
         }
           

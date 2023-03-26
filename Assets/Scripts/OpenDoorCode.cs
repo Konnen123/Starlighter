@@ -32,8 +32,8 @@ public class OpenDoorCode : MonoBehaviour
                 leftDoor.GetComponent<Animator>().enabled = true;
                 rightDoor.GetComponent<Animator>().enabled = true;
 
-                leftDoor.GetComponent<Collider>().enabled = false;
-                rightDoor.GetComponent<Collider>().enabled = false;
+              //  leftDoor.GetComponent<Collider>().enabled = false;
+             //   rightDoor.GetComponent<Collider>().enabled = false;
                 rightDoor.GetComponentInParent<Collider>().enabled = false;
                 
                 TipText.Instance.SetText("");

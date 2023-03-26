@@ -14,13 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcName: 
   npcDialogue:
-  - Hello child, how can I help you?
-  - Ha, I guess the old man fooled you. He tricked you into teleporting in a maze
-    world so he can escape from you. The artifact was never stolen, he has the artifact.
-  - You have to challenge him in his own dreams, in this universe he is immortal.
-    Use this teleporter to enter his mind.
-  - Sorry, I don't know how to fight. However, I know his weak spots are his eyes
+  - Greetings young one, how may I be of assistance to you?
+  - Ah, it appears that the elderly gentleman has deceived you. He cunningly lured
+    you into a labyrinthine realm through teleportation, allowing him to evade capture.
+    Furthermore, the valuable item in question was never pilfered as he had it in
+    his possession all along.
+  - To confront him successfully, you must engage him within the confines of his
+    own dreamscape, where his immortality holds sway. Utilize this teleportation
+    device to gain entry into his subconscious realm.
+  - Regrettably, I am not skilled in the art of combat. Nonetheless, I am aware that
+    his vulnerabilities lie within his eyes.
   playerDialogue:
-  - Give me the artifact that you stole from planet Abronoe!
+  - Give the artifact that was taken from planet Abronoe!
   - 'How can I beat him? '
   - Can you help me?

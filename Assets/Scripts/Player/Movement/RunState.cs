@@ -8,17 +8,20 @@ public class RunState : MovementBaseState
 {
     private Animator _animator;
     private Rigidbody _rigidbody;
-    private bool isJumping;
-    private float currentJumpTime;
+
 
     private Vector3 moveDirection;
+    
+    RaycastHit slopeHit;
     public override void EnterState(MovementStateManager movementStateManager)
     {
         if (SceneManager.GetActiveScene().name == "Intro")
         {
+            
             movementStateManager.SwitchState(movementStateManager.walkState);
             return;
         }
+        movementStateManager.stepSound.enabled = false;
         movementStateManager.runSound.enabled = true;
         _rigidbody = movementStateManager.rigidbody;
         _animator = movementStateManager.animator;
@@ -28,7 +31,7 @@ public class RunState : MovementBaseState
     public override void UpdateState(MovementStateManager movementStateManager)
     {
        
-        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space)) && !isJumping && _rigidbody.velocity.y<-3)
+        if (!(movementStateManager.grounded || Input.GetKeyDown(KeyCode.Space))  && _rigidbody.velocity.y<-6)
         {
       
             movementStateManager.runSound.enabled = false;
@@ -44,8 +47,7 @@ public class RunState : MovementBaseState
 
         if (Input.GetKeyDown(KeyCode.Space) && movementStateManager.grounded)
         {
-            movementStateManager.runSound.enabled = false;
-            Jump(movementStateManager);
+            movementStateManager.SwitchState(movementStateManager.jumpingState);
         }
 
         if (movementStateManager._grapplingGun.isGrappled)
@@ -53,26 +55,7 @@ public class RunState : MovementBaseState
             movementStateManager.runSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.grappleState);
         }
-        
-        if (isJumping)
-        {
 
-            if (currentJumpTime >= movementStateManager.jumpCooldown)
-            {
-                movementStateManager.runSound.enabled = false;
-                movementStateManager.SwitchState(movementStateManager.idleState);
-                isJumping = false;
-                currentJumpTime = 0;
-            }
-            else
-            {
-                currentJumpTime += Time.deltaTime;
-            }
-            
-        }
-     
-       
-        
     }
     
     public override void FixedUpdateState(MovementStateManager movementStateManager)
@@ -112,24 +95,27 @@ public class RunState : MovementBaseState
         moveDirection = moveDirection.normalized * Time.fixedDeltaTime * movementStateManager.runSpeed;
         
         
-        if (velocity.magnitude < .1f && !isJumping)
+        if (velocity.magnitude < .1f && movementStateManager.grounded)
         {
             movementStateManager.runSound.enabled = false;
             movementStateManager.SwitchState(movementStateManager.idleState);
             return;
         }
+        Vector3 slopeMovementDirection;
         
-       _rigidbody.MovePosition(movementStateManager.transform.position +moveDirection);
+        if (OnSlope(movementStateManager))
+        {
+            slopeMovementDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
+            _rigidbody.MovePosition(movementStateManager.transform.position + slopeMovementDirection);
+        }
+        else
+           _rigidbody.MovePosition(movementStateManager.transform.position +moveDirection);
        
 
        
-        if(!isJumping)
-        _animator.Play("Run");
+        if(movementStateManager.grounded)
+         _animator.Play("Run");
         
-
-       
-
-   //    if (OnSlope(movementStateManager))
       //    _rigidbody.MovePosition(movementStateManager.transform.position +  Vector3.down * movementStateManager.playerHeight / 2 * movementStateManager.slopeForce  * Time.fixedDeltaTime);
       //   movementStateManager.transform.position += Vector3.down * movementStateManager.playerHeight / 2 * movementStateManager.slopeForce  * Time.fixedDeltaTime;
        
@@ -144,30 +130,22 @@ public class RunState : MovementBaseState
         _rigidbody.velocity=Vector3.zero;
         yield return new WaitForSeconds(.2f);
         movementStateManager.runSound.enabled = false;
-        Debug.Log("wall");
+       
         movementStateManager.SwitchState(movementStateManager.idleState);
     }
 
     private bool OnSlope(MovementStateManager movementStateManager)
     {
-        if (isJumping)
+        if (!movementStateManager.grounded)
             return false;
 
-        RaycastHit hit;
+     
         
-        if(Physics.Raycast(movementStateManager.transform.position,Vector3.down,out hit,movementStateManager.playerHeight/2*movementStateManager.slopeForceRayLength))
-            if (hit.normal != Vector3.up)
+        if(Physics.Raycast(movementStateManager.transform.position,Vector3.down,out slopeHit,movementStateManager.playerHeight/2 +.5f))
+            if (slopeHit.normal != Vector3.up)
                 return true;
         return false;
     }
     
-    void Jump(MovementStateManager movementStateManager)
-    {
-        isJumping = true;
-       
-        _animator.Play("Jump");
-        _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0, _rigidbody.velocity.z);
-        _rigidbody.AddForce(movementStateManager.transform.up * movementStateManager.jumpForce,ForceMode.Impulse);
-
-    }
+ 
 }
