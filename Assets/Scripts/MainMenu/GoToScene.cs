@@ -7,7 +7,7 @@ public class GoToScene : MonoBehaviour
 {
     public void SelectScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        LevelTransition.Instance.LoadScene(sceneName);
 
     }
 

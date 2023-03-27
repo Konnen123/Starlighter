@@ -24,7 +24,7 @@ public class TeleporterRoom : MonoBehaviour
               
                     SaveSystem.SaveLevel(sceneIndex);
                 }
-                SceneManager.LoadScene("Act1");
+                LevelTransition.Instance.LoadScene("Act1");
             }
         }
     }

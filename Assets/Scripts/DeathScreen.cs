@@ -20,7 +20,7 @@ public class DeathScreen : MonoBehaviour
 
     public void GoToMenu()
     {
-        SceneManager.LoadScene(0);
+        LevelTransition.Instance.LoadScene("Menu");
     }
 
     public void Restart()
@@ -29,7 +29,7 @@ public class DeathScreen : MonoBehaviour
         checkpoint = movementStateManager.checkPoint;
         if (!checkpoint)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            LevelTransition.Instance.LoadScene(SceneManager.GetActiveScene().name);
             return;
         }
         
@@ -43,6 +43,7 @@ public class DeathScreen : MonoBehaviour
 
         yield return new WaitForSeconds(.1f);
         player.transform.position = checkPointPosition.position;
+        LevelTransition.Instance.playCircleWipeStart();
         yield return new WaitForSeconds(1f);
         aimCamera.enabled = true;
         explorationCamera.enabled = true;
@@ -73,7 +74,7 @@ public class DeathScreen : MonoBehaviour
             }
             audio.GetComponent<AudioSource>().enabled=true;
         }
-       
+       // LevelTransition.Instance.playCircleWipeEnd();
         gameObject.SetActive(false);
     
     }

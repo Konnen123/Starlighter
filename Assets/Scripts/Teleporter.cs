@@ -21,7 +21,7 @@ public class Teleporter : MonoBehaviour
 
                     SaveSystem.SaveLevel(sceneIndex);
                 }
-                SceneManager.LoadScene(sceneName);      
+                LevelTransition.Instance.LoadScene(sceneName);      
             }
           
         }
