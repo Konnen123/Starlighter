@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class ShootingCamera : MonoBehaviour
@@ -13,16 +14,21 @@ public class ShootingCamera : MonoBehaviour
     private bool isInRange;
     private float currentTime;
     private Transform projectileSpawner;
+
+    private MovementStateManager movementStateManager;
     // Start is called before the first frame update
     void Start()
     {
         currentTime = shootRate;
         projectileSpawner = transform.GetChild(0);
+        movementStateManager = player.GetComponent<MovementStateManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (movementStateManager.isDead) 
+            return;
         float distance = Vector3.Distance(transform.position, player.transform.position);
         if(isRotatable)
             transform.LookAt(player.transform);

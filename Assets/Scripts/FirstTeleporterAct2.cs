@@ -9,6 +9,7 @@ public class FirstTeleporterAct2 : MonoBehaviour
     [SerializeField] private Transform pointToTeleport;
     [SerializeField] private Transform player;
     private bool isInRange;
+    private bool isPressed;
 
     [SerializeField] private CinemachineVirtualCamera explorationCamera, aimCamera;
 
@@ -19,8 +20,9 @@ public class FirstTeleporterAct2 : MonoBehaviour
 
     private void Update()
     {
-        if (isInRange&& Input.GetKeyDown(KeyCode.E))
+        if (isInRange&& Input.GetKeyDown(KeyCode.E)&& !isPressed)
         {
+            isPressed = true;
             StartCoroutine(TeleportPlayer());
         }
     }
@@ -45,10 +47,12 @@ public class FirstTeleporterAct2 : MonoBehaviour
         yield return null;
         player.transform.position = pointToTeleport.position;
         player.transform.rotation = pointToTeleport.rotation;
-        yield return null;
+
         aimCamera.enabled = true;
         explorationCamera.enabled = true;
-        yield return null;
+        
+        TipText.Instance.SetText("");
+
         transform.parent.parent.gameObject.SetActive(false);
     }
 }

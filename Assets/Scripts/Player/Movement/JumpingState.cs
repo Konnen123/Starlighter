@@ -37,6 +37,14 @@ public class JumpingState : MovementBaseState
         {
             movementStateManager.SwitchState(movementStateManager.runState);
         }
+        if (movementStateManager.isDead)
+        {
+            movementStateManager.SwitchState(movementStateManager.deathState);
+        }
+        if (movementStateManager._grapplingGun.isGrappled)
+        {
+            movementStateManager.SwitchState(movementStateManager.grappleState);
+        }
     }
 
     public override void FixedUpdateState(MovementStateManager movementStateManager)

@@ -6,8 +6,15 @@ using UnityEngine.Animations.Rigging;
 public class DeathState : MovementBaseState
 {
     private Animator _animator;
+
     public override void EnterState(MovementStateManager movementStateManager)
     {
+        if (movementStateManager.deathScreen.activeInHierarchy)
+        {
+            movementStateManager.SwitchState(movementStateManager.idleState);
+            return;
+        }
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
       AudioManager.Instance.playSound(AudioManager.Instance.death);
@@ -46,11 +53,14 @@ public class DeathState : MovementBaseState
         GameObject[] allAudioOutputs = GameObject.FindGameObjectsWithTag("Audio");
         foreach (var audio in allAudioOutputs)
         {
-            audio.SetActive(false);
+            if(audio.name =="HeartBeat") 
+                audio.SetActive(false);
+            audio.GetComponent<AudioSource>().enabled=false;
         }
         movementStateManager.deathScreen.SetActive(true);
         yield return new WaitForSeconds(2f);
         movementStateManager.deathScreen.transform.GetChild(1).gameObject.SetActive(true);
+        movementStateManager.SwitchState(movementStateManager.idleState);
 
     }
 }

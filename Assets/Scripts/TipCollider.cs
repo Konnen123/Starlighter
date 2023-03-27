@@ -7,7 +7,8 @@ public class TipCollider : MonoBehaviour
 {
     [SerializeField] private string tipText;
 
-
+    
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -16,10 +17,11 @@ public class TipCollider : MonoBehaviour
         }
     }
 
+
     private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player"))
-            TipText.Instance.SetText("");
+            Destroy(gameObject);
     }
 
     private void OnDestroy()

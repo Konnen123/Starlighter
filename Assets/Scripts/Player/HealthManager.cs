@@ -11,7 +11,7 @@ public class HealthManager : MonoBehaviour
     [SerializeField] private float maxHealth;
     [SerializeField] private Image healthBar;
 
-
+    private List<Material> playerMat = new List<Material>();
     private float currentHealth;
 
     private void Awake()
@@ -21,14 +21,17 @@ public class HealthManager : MonoBehaviour
             Destroy(this); 
         } 
         else 
-        { 
-           
+        {
             Instance = this; 
         }
 
         player= GameObject.FindWithTag("Player");
         currentHealth = maxHealth;
         healthBar.fillAmount = currentHealth / maxHealth;
+        foreach (var mat in player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>().materials)
+        {
+           playerMat.Add(mat);
+        }
     }
 
     public float GetCurrentHealth()
@@ -44,11 +47,38 @@ public class HealthManager : MonoBehaviour
         AudioManager.Instance.playSound(AudioManager.Instance.playerHit);
         currentHealth -= damage;
         healthBar.fillAmount = currentHealth / maxHealth;
+        if (currentHealth < 40)
+        {
+            foreach (var mat in playerMat)
+            {
+                mat.EnableKeyword("_EMISSION");
+            
+                mat.SetColor("_EmissionColor",Color.red *3f);
+            }
+        }
         if (isPlayerDead())
         {
+            foreach (var mat in playerMat)
+            {
+                mat.EnableKeyword("_EMISSION");
+            
+                mat.SetColor("_EmissionColor",new Color(0.1f,0.1f,0.1f) *3f);
+            }
             player.GetComponent<MovementStateManager>().isDead = true;
         }
           
+    }
+
+    public void HealToFull()
+    {
+        currentHealth = maxHealth;
+        foreach (var mat in playerMat)
+        {
+            mat.EnableKeyword("_EMISSION");
+            
+            mat.SetColor("_EmissionColor",Color.white *3f);
+        }
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     private bool isPlayerDead()

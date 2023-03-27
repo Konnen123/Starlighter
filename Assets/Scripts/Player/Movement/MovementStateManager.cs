@@ -46,6 +46,7 @@ public class MovementStateManager : MonoBehaviour
     public float CameraAngleOverride = 0.0f;
     [Header("Death")] public GameObject deathScreen;
     public bool isDead;
+    [Header("CheckPoint")] public bool checkPoint;
 
    
     public MovementBaseState currentState;

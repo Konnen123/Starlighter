@@ -34,7 +34,7 @@ public class OpenDoorCode : MonoBehaviour
 
               //  leftDoor.GetComponent<Collider>().enabled = false;
              //   rightDoor.GetComponent<Collider>().enabled = false;
-                rightDoor.GetComponentInParent<Collider>().enabled = false;
+                rightDoor.GetComponentInParent<MeshCollider>().enabled = false;
                 
                 TipText.Instance.SetText("");
                 Destroy(this);
