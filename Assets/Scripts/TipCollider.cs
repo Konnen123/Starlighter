@@ -21,7 +21,7 @@ public class TipCollider : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Player"))
-            Destroy(gameObject);
+            TipText.Instance.SetText("");
     }
 
     private void OnDestroy()

@@ -86,7 +86,7 @@ public class BossAttacks : MonoBehaviour
 
    public void BackToMenu()
    {
-      SceneManager.LoadScene(0);
+      LevelTransition.Instance.LoadScene("Menu");
    }
    
 }
